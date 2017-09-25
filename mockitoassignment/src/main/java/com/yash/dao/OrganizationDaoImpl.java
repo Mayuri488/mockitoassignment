@@ -18,8 +18,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class OrganizationDaoImpl implements OrganizationDao {
 
-    @Autowired
+
     private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Override
     public Organization findOrgById(Integer id) {
@@ -38,10 +43,10 @@ public class OrganizationDaoImpl implements OrganizationDao {
     public Organization getAllDetails(Integer orgId,Integer fieldId) {
 
         System.out.println("In Dao");
-        String query = "SELECT * FROM organization LEFT OUTER JOIN client ON organization.orgid=client.fkorgid " +
-                "LEFT OUTER JOIN form ON client.clientid=form.fkclientid " +
-                "LEFT OUTER JOIN fields ON form.fromid=fields.fkformid " +
-                "where organization.orgid=? and fields.fieldid=? and fields.fieldid IS NOT NULL";
+        String query = "SELECT * FROM ORGANIZATION LEFT OUTER JOIN CLIENT ON ORGANIZATION.orgId=CLIENT.orgId " +
+                "LEFT OUTER JOIN FARM ON CLIENT.clientId=FARM.clientId " +
+                "LEFT OUTER JOIN FIELD ON FARM.farmId=FIELD.farmId " +
+                "WHERE ORGANIZATION.orgId=? and FIELD.fieldId=? and FIELD.fieldId IS NOT NULL";
 
 
         try{
@@ -50,6 +55,7 @@ public class OrganizationDaoImpl implements OrganizationDao {
             return organization;
 
         }catch (Exception d){
+            System.out.println(d.fillInStackTrace());
             throw new OrganizationNotFoundException("Interanal Server Error");
         }
     }
@@ -57,10 +63,10 @@ public class OrganizationDaoImpl implements OrganizationDao {
     public FieldResponseJson getFieldsDetails(Integer orgId,Integer fieldId) {
 
         System.out.println("In Dao");
-        String query = "SELECT * FROM organization LEFT OUTER JOIN client ON organization.orgid=client.fkorgid " +
-                "LEFT OUTER JOIN form ON client.clientid=form.fkclientid " +
-                "LEFT OUTER JOIN fields ON form.fromid=fields.fkformid " +
-                "where organization.orgid=? and fields.fieldid=? and fields.fieldid IS NOT NULL";
+        String query = "SELECT * FROM ORGANIZATION LEFT OUTER JOIN CLIENT ON ORGANIZATION.orgId=CLIENT.orgId " +
+                "LEFT OUTER JOIN FARM ON CLIENT.clientId=FARM.clientId " +
+                "LEFT OUTER JOIN FIELD ON FARM.farmId=FIELD.farmId " +
+                "WHERE ORGANIZATION.orgId=? and FIELD.fieldId=? and FIELD.fieldId IS NOT NULL";
 
 
         try{
@@ -69,6 +75,7 @@ public class OrganizationDaoImpl implements OrganizationDao {
             return fieldResponse;
 
         }catch (Exception d){
+            System.out.println(d.fillInStackTrace());
             throw new OrganizationNotFoundException("Interanal Server Error");
         }
     }

@@ -36,8 +36,8 @@ public class AllDataExtrator implements ResultSetExtractor<Organization> {
             Field field = new Field(filedId, filedName);
             fieldList.add(field);
 
-            Integer farmId = resultSet.getInt("FromId");
-            String farmName = resultSet.getString("fromName");
+            Integer farmId = resultSet.getInt("farmId");
+            String farmName = resultSet.getString("farmName");
             Farm farm = new Farm(farmId, farmName);
             farm.setFieldList(fieldList);
             farmList.add(farm);
@@ -45,7 +45,7 @@ public class AllDataExtrator implements ResultSetExtractor<Organization> {
             farm.setFieldList(fieldList);
 
             Integer clientId = resultSet.getInt("clientId");
-            String clientName = resultSet.getString("clientNamr");
+            String clientName = resultSet.getString("clientName");
             Client client = new Client(clientId, clientName);
             client.setFarmList(farmList);
             clientList.add(client);

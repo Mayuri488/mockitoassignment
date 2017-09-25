@@ -14,7 +14,6 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 
-
 public class DataAccessIntegrationTestTemplate {
 
     private EmbeddedDatabase db;

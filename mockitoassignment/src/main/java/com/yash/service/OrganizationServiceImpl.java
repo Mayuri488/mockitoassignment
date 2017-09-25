@@ -18,13 +18,11 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     public Organization findOrgById(Integer id) {
         Organization organization=organizationDao.findOrgById(id);
-        //Organization organization=new Organization(1,"Yash");
         return organization;
     }
 
     @Override
     public FieldResponseJson getFieldsDetails(Integer orgId, Integer fieldId) {
-        System.out.println("IN Service.........");
        return organizationDao.getFieldsDetails(orgId,fieldId);
     }
 

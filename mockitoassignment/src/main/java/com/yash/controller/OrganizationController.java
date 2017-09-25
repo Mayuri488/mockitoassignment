@@ -60,8 +60,8 @@ public class OrganizationController {
 
 
     @RequestMapping(value = "/fields/{fieldId}/orgs/{orgId}/field",method = RequestMethod.GET, consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Organization> getFieldsDetails(@PathVariable(value="orgId" ) Integer orgId,@PathVariable(value="fieldId" ) Integer fieldId,@RequestParam(value="client") Integer clientId) throws  OrganizationNotFoundException{
-        System.out.println(clientId);
+    public ResponseEntity<Organization> getAllDetails(@PathVariable(value="orgId" ) Integer orgId,@PathVariable(value="fieldId" ) Integer fieldId,@RequestParam(value="client") Integer clientId) throws  OrganizationNotFoundException{
+        System.out.println("============================");
         Organization organization = organizationService.getAllDetails(orgId, fieldId);
         return new ResponseEntity(organization, HttpStatus.OK);
     }

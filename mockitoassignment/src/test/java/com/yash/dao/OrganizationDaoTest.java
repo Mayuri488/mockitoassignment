@@ -58,9 +58,9 @@ public class OrganizationDaoTest {
         FieldResponseJson fieldResponseJson=new FieldResponseJson();
         Field field=new Field(1,"Field1");
         fieldResponseJson.setField(field);
-         when(jdbcTemplate.query(anyString(),any(Objects[].class),any(FieldResultSetExtratcor.class))).thenReturn(fieldResponseJson);
-        Assert.assertNotNull(fieldResponseJson);
-        System.out.println("Organization :: "+fieldResponseJson);
+        when(jdbcTemplate.query(anyString(),any(Objects[].class),any(FieldResultSetExtratcor.class))).thenReturn(fieldResponseJson);
+        organizationDao.getFieldsDetails(1,1);
+        Assert.assertNotNull(organizationDao.getFieldsDetails(1,1));
     }
 
    @Test
@@ -68,8 +68,22 @@ public class OrganizationDaoTest {
         Organization organization=getData();
        System.out.println(organization);
        when(jdbcTemplate.query(anyString(),any(Objects[].class),any(AllDataExtrator.class))).thenReturn(organization);
-
+       organizationDao.getAllDetails(1,1);
+       Assert.assertNotNull(organizationDao.getAllDetails(1,1));
    }
+
+   @Test(expected = OrganizationNotFoundException.class)
+   public void fetchDetailsAgainstReqClientThrowException(){
+       when(jdbcTemplate.query(anyString(),any(Objects[].class),any(AllDataExtrator.class))).thenThrow(new OrganizationNotFoundException() );
+       organizationDao.getAllDetails(3,2);
+   }
+
+    @Test(expected = OrganizationNotFoundException.class)
+    public void fieldAgainstRequestedOrgThrowException(){
+        when(jdbcTemplate.query(anyString(),any(Objects[].class),any(AllDataExtrator.class))).thenThrow(new OrganizationNotFoundException() );
+        organizationDao.getAllDetails(1,7);
+    }
+
 
    public Organization getData(){
        List<Field> fieldList=new ArrayList<>();
