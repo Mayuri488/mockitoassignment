@@ -1,7 +1,7 @@
 package com.yash.dao;
 
 import com.yash.exception.OrganizationNotFoundException;
-import com.yash.jsonclasses.FieldResponseJson;
+import com.yash.response.FieldResponseJson;
 import com.yash.model.Client;
 import com.yash.model.Farm;
 import com.yash.model.Field;
@@ -14,7 +14,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -24,8 +23,6 @@ import java.util.List;
 import java.util.Objects;
 
 import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
@@ -52,6 +49,12 @@ public class OrganizationDaoTest {
         Organization org=organizationDao.findOrgById(1);
         Assert.assertNotNull(org);
     }
+    /*@Test
+    public void findOrgByIdShouldReturnSizeOne(){
+        Organization organization=new Organization(1,"Yahs");
+        when(jdbcTemplate.queryForObject(anyString(),anyObject(),any(BeanPropertyRowMapper.class))).thenReturn(organization);
+        Organization org=organizationDao.findOrgById(1);
+    }*/
 
     @Test
     public void fieldAgainstRequestedOrg(){

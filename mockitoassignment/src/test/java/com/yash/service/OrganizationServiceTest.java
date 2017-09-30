@@ -1,10 +1,11 @@
 package com.yash.service;
 
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import com.yash.dao.OrganizationDao;
+import com.yash.response.FieldResponseJson;
+import com.yash.model.Client;
+import com.yash.model.Farm;
+import com.yash.model.Field;
+import com.yash.model.Organization;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,12 +13,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.yash.dao.OrganizationDao;
-import com.yash.jsonclasses.FieldResponseJson;
-import com.yash.model.Client;
-import com.yash.model.Farm;
-import com.yash.model.Field;
-import com.yash.model.Organization;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.Mockito.when;
 
 /**
  * Created by mayuri.patil on 20-09-2017.

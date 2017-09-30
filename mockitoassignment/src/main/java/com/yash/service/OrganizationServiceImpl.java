@@ -1,7 +1,7 @@
 package com.yash.service;
 
-import com.yash.jsonclasses.FieldResponseJson;
 import com.yash.dao.OrganizationDao;
+import com.yash.response.FieldResponseJson;
 import com.yash.model.Organization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

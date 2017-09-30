@@ -1,4 +1,4 @@
-package com.yash.jsonclasses;
+package com.yash.response;
 
 import com.yash.model.Field;
 

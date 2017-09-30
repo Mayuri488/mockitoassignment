@@ -1,7 +1,6 @@
 package com.yash.resultsetextratcor;
 
-import com.yash.jsonclasses.FieldResponseJson;
-import com.yash.exception.OrganizationNotFoundException;
+import com.yash.response.FieldResponseJson;
 import com.yash.model.Field;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;

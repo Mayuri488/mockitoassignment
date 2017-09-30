@@ -1,6 +1,6 @@
 package com.yash.dao;
 
-import com.yash.jsonclasses.FieldResponseJson;
+import com.yash.response.FieldResponseJson;
 import com.yash.model.Organization;
 
 /**
@@ -9,5 +9,5 @@ import com.yash.model.Organization;
 public interface OrganizationDao {
     public Organization findOrgById(Integer id);
     public FieldResponseJson getFieldsDetails(Integer orgId, Integer fieldId);
-    public Organization getAllDetails(Integer orgId,Integer fieldId);
+    public Organization getAllDetails(Integer orgId, Integer fieldId);
 }

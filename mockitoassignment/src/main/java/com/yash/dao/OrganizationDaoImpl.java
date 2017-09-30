@@ -1,12 +1,16 @@
 package com.yash.dao;
 
-import com.yash.jsonclasses.FieldResponseJson;
+import com.yash.controller.OrganizationController;
 import com.yash.exception.OrganizationNotFoundException;
+import com.yash.response.FieldResponseJson;
 import com.yash.model.Organization;
 import com.yash.resultsetextratcor.AllDataExtrator;
 import com.yash.resultsetextratcor.FieldResultSetExtratcor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -18,29 +22,34 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class OrganizationDaoImpl implements OrganizationDao {
 
-
-    private JdbcTemplate jdbcTemplate;
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrganizationDaoImpl.class);
 
     @Autowired
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+    private JdbcTemplate jdbcTemplate;
+
 
     @Override
     public Organization findOrgById(Integer id) {
         try {
             Organization org = jdbcTemplate.queryForObject("SELECT * FROM organization where orgID = ? ", new Object[]{id}, new BeanPropertyRowMapper<Organization>(Organization.class));
-            System.out.println("organization :::-> " + org);
+            LOGGER.info("In findOrgById Dao...");
             return org;
-        }catch (DataAccessException d){
+        }
+        catch (EmptyResultDataAccessException d){
+            LOGGER.error(d.getMessage());
+            throw new OrganizationNotFoundException("Organization  not Found");
+        }
+        catch (DataAccessException d){
+            LOGGER.error(d.getMessage());
             throw new OrganizationNotFoundException("Organization  not Found");
         }
         catch (Exception d){
+            LOGGER.error(d.getMessage());
             throw new OrganizationNotFoundException("Interanal Server Error");
         }
     }
 
-    public Organization getAllDetails(Integer orgId,Integer fieldId) {
+    public Organization getAllDetails(Integer orgId, Integer fieldId) {
 
         System.out.println("In Dao");
         String query = "SELECT * FROM ORGANIZATION LEFT OUTER JOIN CLIENT ON ORGANIZATION.orgId=CLIENT.orgId " +
@@ -50,17 +59,17 @@ public class OrganizationDaoImpl implements OrganizationDao {
 
 
         try{
-            Organization  organization = jdbcTemplate.query(query, new Object[]{orgId, fieldId}, new AllDataExtrator());
+            Organization organization = jdbcTemplate.query(query, new Object[]{orgId, fieldId}, new AllDataExtrator());
             System.out.println(organization);
             return organization;
 
         }catch (Exception d){
-            System.out.println(d.fillInStackTrace());
+            LOGGER.error(d.getMessage());
             throw new OrganizationNotFoundException("Interanal Server Error");
         }
     }
 
-    public FieldResponseJson getFieldsDetails(Integer orgId,Integer fieldId) {
+    public FieldResponseJson getFieldsDetails(Integer orgId, Integer fieldId) {
 
         System.out.println("In Dao");
         String query = "SELECT * FROM ORGANIZATION LEFT OUTER JOIN CLIENT ON ORGANIZATION.orgId=CLIENT.orgId " +
@@ -75,9 +84,11 @@ public class OrganizationDaoImpl implements OrganizationDao {
             return fieldResponse;
 
         }catch (Exception d){
-            System.out.println(d.fillInStackTrace());
+            LOGGER.error(d.getMessage());
             throw new OrganizationNotFoundException("Interanal Server Error");
         }
     }
+
+
 
 }

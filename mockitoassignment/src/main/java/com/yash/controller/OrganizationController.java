@@ -1,14 +1,18 @@
 package com.yash.controller;
 
-import com.yash.jsonclasses.FieldResponseJson;
 import com.yash.exception.ErrorResponse;
 import com.yash.exception.OrganizationNotFoundException;
+import com.yash.response.FieldResponseJson;
 import com.yash.model.Organization;
 import com.yash.service.OrganizationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+
 
 /**
  * Created by mayuri.patil on 19-09-2017.
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class OrganizationController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrganizationController.class);
 
     @ExceptionHandler(OrganizationNotFoundException.class)
     public ResponseEntity<ErrorResponse> exceptionHandlerNotFound(Exception ex) {
@@ -39,10 +44,8 @@ public class OrganizationController {
     private OrganizationService organizationService;
 
     @RequestMapping(value = "/org/{id}",method = RequestMethod.GET, consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Organization> getOrgById(@PathVariable(value="id" ) Integer orgId) throws  Exception, OrganizationNotFoundException{
-
-        System.out.print("************\n");
-
+    public ResponseEntity<Organization> getOrgById(@PathVariable(value="id" ) Integer orgId) throws  Exception, OrganizationNotFoundException {
+        LOGGER.info("In getOrgById Controller...");
             Organization organization = organizationService.findOrgById(orgId);
             System.out.println(organization);
             return new ResponseEntity<Organization>(organization, HttpStatus.OK);
@@ -50,8 +53,8 @@ public class OrganizationController {
     }
 
     @RequestMapping(value = "org/{orgId}/field/{fieldId}/field",method = RequestMethod.GET, consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Organization> getFieldsDetails(@PathVariable(value="orgId" ) Integer orgId,@PathVariable(value="fieldId" ) Integer fieldId) throws  OrganizationNotFoundException{
-        System.out.println("################");
+    public ResponseEntity<Organization> getFieldsDetails(@PathVariable(value="orgId" ) Integer orgId, @PathVariable(value="fieldId" ) Integer fieldId) throws OrganizationNotFoundException {
+        LOGGER.info("In getFieldsDetails Controller...");
         FieldResponseJson fieldResponseJson = organizationService.getFieldsDetails(orgId, fieldId);
         return new ResponseEntity(fieldResponseJson, HttpStatus.OK);
     }
@@ -60,8 +63,8 @@ public class OrganizationController {
 
 
     @RequestMapping(value = "/fields/{fieldId}/orgs/{orgId}/field",method = RequestMethod.GET, consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Organization> getAllDetails(@PathVariable(value="orgId" ) Integer orgId,@PathVariable(value="fieldId" ) Integer fieldId,@RequestParam(value="client") Integer clientId) throws  OrganizationNotFoundException{
-        System.out.println("============================");
+    public ResponseEntity<Organization> getAllDetails(@PathVariable(value="orgId" ) Integer orgId, @PathVariable(value="fieldId" ) Integer fieldId, @RequestParam(value="client") Integer clientId) throws OrganizationNotFoundException {
+        LOGGER.info("In getAllDetails Controller...");
         Organization organization = organizationService.getAllDetails(orgId, fieldId);
         return new ResponseEntity(organization, HttpStatus.OK);
     }

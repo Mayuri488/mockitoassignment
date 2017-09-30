@@ -1,12 +1,19 @@
 package com.yash.exception;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(value= HttpStatus.INTERNAL_SERVER_ERROR,reason="Something Went Wrong")
 public class OrganizationException extends RuntimeException {
 
+    private String errorMessage;
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
     public OrganizationException() {
         super();
+    }
+
+    public OrganizationException(String errorMessage) {
+        super(errorMessage);
+        this.errorMessage = errorMessage;
     }
 }

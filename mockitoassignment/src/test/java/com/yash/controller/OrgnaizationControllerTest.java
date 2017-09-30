@@ -3,13 +3,13 @@ package com.yash.controller;
 import com.yash.exception.OrganizationNotFoundException;
 import com.yash.model.Organization;
 import com.yash.service.OrganizationService;
-import com.yash.service.OrganizationServiceImpl;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
 import static org.mockito.Mockito.when;
 
 /**
@@ -29,7 +29,7 @@ public class OrgnaizationControllerTest {
     public void retrieveOrgByIdValidTest() throws OrganizationNotFoundException,Exception{
 
          when(organizationService.findOrgById(1)).thenReturn(retrieveOrgData());
-        // Assert.assertNotNull(retrieveOrgData());
+         Assert.assertNotNull(retrieveOrgData());
         organizationController.getOrgById(1);
 
     }
